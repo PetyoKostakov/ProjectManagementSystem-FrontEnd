@@ -1,26 +1,112 @@
 <div class="container">
 
-  <!-- Todos input -->
-  <form role="form" ng-submit="addTodo()">
+  <div class="page-header">
+    <h3 role="button" ng-click="showAddTask = ! showAddTask">Add task</h3>
+  </div>
+  <form  role="form" ng-submit="addTask()" ng-show="showAddTask" novalidate>
+    <div class="form-group">
+      <label for="titleInput">Title</label>
+      <input type="text" ng-model="form.title" class="form-control" id="titleInput" placeholder="Title">
+    </div>
+    <div class="form-group">
+      <label for="descriptionInput">Description</label>
+      <input type="text" ng-model="form.description" class="form-control" id="descriptionInput" placeholder="Description">
+    </div>
+
     <div class="row">
-      <div class="input-group">
-        <input type="text" ng-model="todo" placeholder="What needs to be done?" class="form-control">
-        <span class="input-group-btn">
-          <input type="submit" class="btn btn-primary" value="Add">
-        </span>
+      <div class="form-group col-md-4 col-lg-4">
+        <label for="todoInput">Todo</label>
+        <input type="number" id="todoInput" ng-model="form.todo" >
+      </div>
+      <div class="form-group col-md-4 col-lg-4">
+        <label for="actualInput">Actual</label>
+        <input type="number" id="actualInput" ng-model="form.actual" >
+      </div>
+      <div class="form-group col-md-4 col-lg-4">
+        <label for="estimateInput">Estimate</label>
+        <input type="number" id="estimateInput" ng-model="form.estimate" >
       </div>
     </div>
+
+    <br/>
+    <pre>form = {{form | json}}</pre>
+
+    <button type="submit" class="btn btn-default">Submit</button>
   </form>
 
-  <h2>My todos</h2>
+  <div class="page-header">
+    <h3 role="button">My Tasks</h3>
+  </div>
+  <div class="pm-cont-item" ng-repeat="task in tasks">
+    <div class="pm-item" ng-class="{'pm-item-done': task.done}">
+      <div class="pm-row" style="align-items: center">
+        <h3 class="flex-8"><span class="pointer ">{{ task.title }}</span></h3>
+        <div class="btn-group" role="group" aria-label="...">
+          <button type="button"  class="btn btn-success btn-xs" ng-click="setToDone(task._id, $index, !task.done)" >
+            <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> {{ task.done ? "Undone" : "Done"}}
+          </button>
+          <button type="button"  class="btn btn-default btn-xs btn-danger"  ng-click="deleteTask(task._id, $index)">
+            Remove <span class="glyphicon  glyphicon-remove" aria-hidden="true"></span>
+          </button>
+        </div>
+      </div>
+      <div class="pm-row">
+        <p class="flex-5">{{ task.description }}</p>
+        <b>
+          <span class="flex-2">Estimate: {{ task.estimate }} | </span>
+          <span class="flex-2">Actuals: {{ task.actual }} | </span>
+          <span class="flex-2">To do:{{ task.todo }}</span>
+        </b>
+      </div>
+    </div>
+  </div>
+  <!--<div class="list-group" ng-repeat="task in tasks">-->
+      <!--<a href="#" class="list-group-item">-->
+        <!--<span class="badge">Estimate: {{ task.estimate }}</span>-->
+        <!--<span class="badge">Actuals: {{ task.actual }}</span>-->
+        <!--<span class="badge">To do:{{ task.todo }}</span>-->
+        <!--<p>{{ task.title }}</p>-->
+        <!--<p class="list-group-item-text col-md-4 col-lg-4">{{ task.description }}</p>-->
+        <!--<span class="input-group-btn">-->
+        <!--<button class="btn btn-danger" ng-click="removeTodo($index)" aria-label="Remove">X</button>-->
+      <!--</span>-->
+      <!--</a>-->
+  <!--</div>-->
+  <!--<div class="list-group" ng-repeat="task in tasks">-->
+    <!--<a href="#" class="list-group-item">-->
+      <!--<h4 class="list-group-item-heading col-md-4 col-lg-4">{{ task.title }}</h4>-->
+      <!--<p class="list-group-item-text col-md-4 col-lg-4">{{ task.description }}</p>-->
+      <!--&lt;!&ndash;<span class="badge">{{ task.todo }}</span>&ndash;&gt;-->
+      <!--&lt;!&ndash;<span class="badge">{{ task.actual }}</span>&ndash;&gt;-->
+      <!--&lt;!&ndash;<span class="badge">{{ task.estimate }}</span>&ndash;&gt;-->
+      <!--&lt;!&ndash;<span class="input-group-btn">&ndash;&gt;-->
+        <!--&lt;!&ndash;<button class="btn btn-danger" ng-click="removeTodo($index)" aria-label="Remove">X</button>&ndash;&gt;-->
+      <!--&lt;!&ndash;</span>&ndash;&gt;-->
+    <!--</a>-->
+  <!--</div>-->
+  <!--<div ng-repeat="task in tasks">-->
+    <!--<h3>{{ task.title }}</h3>-->
+    <!--<p>{{ task.description }}</p>-->
+    <!--<span>TODO: {{ task.todo }}</span>-->
+    <!--<span>TODO: {{ task.actual }}</span>-->
+    <!--<span>TODO: {{ task.estimate }}</span>-->
+    <!--<button ng-click="deleteTask(task._id, $index)">delete</button>-->
+  <!--</div>-->
 
   <!--  Todo List -->
-  <div ui-sortable ng-model="todos">
-  <p class="input-group" ng-repeat="todo in todos" style="padding:5px 10px; cursor: move;">
-    <input type="text" ng-model="todo" class="form-control">
-    <span class="input-group-btn">
-      <button class="btn btn-danger" ng-click="removeTodo($index)" aria-label="Remove">X</button>
-    </span>
-  </p>
-</div>
+  <!--<div ui-sortable ng-model="todos">-->
+  <!--<p class="input-group" ng-repeat="todo in todos" style="padding:5px 10px; cursor: move;">-->
+    <!--<input type="text" ng-model="todo" class="form-control">-->
+    <!--<span class="input-group-btn">-->
+      <!--<button class="btn btn-danger" ng-click="removeTodo($index)" aria-label="Remove">X</button>-->
+    <!--</span>-->
+  <!--</p>-->
+  <!-- <div class="list-group" ng-repeat="userStory in userStories">
+    <a href="#" class="list-group-item active">
+      <h4 class="list-group-item-heading">userStory</h4>
+      <p class="list-group-item-text">...</p>
+    </a>
+  </div>
+</div>-->
+  <div class="pm-footer"></div>
 </div>
