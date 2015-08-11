@@ -34,12 +34,10 @@ angular.module('PMS')
       });
     };
 
-    $scope.setToDone = function(id, index, done) {
-      var updateData = {
-        done: done
-      };
+    $scope.setToDone = function(id, index, task) {
+      task.done = !task.done;
 
-      taskService.put(id, updateData, function(updatedRecord) {
+      taskService.put(id, task, function(updatedRecord) {
         $scope.tasks[index].done = updatedRecord.done;
         console.log(updatedRecord);
       });

@@ -42,10 +42,10 @@
       <div class="pm-row" style="align-items: center">
         <h3 class="flex-8"><span class="pointer ">{{ task.title }}</span></h3>
         <div class="btn-group" role="group" aria-label="...">
-          <button type="button"  class="btn btn-success btn-xs" ng-click="setToDone(task._id, $index, !task.done)" >
+          <button type="button"  class="btn btn-success btn-xs" ng-click="setToDone((task._id || task.id), $index, task)" >
             <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> {{ task.done ? "Undone" : "Done"}}
           </button>
-          <button type="button"  class="btn btn-default btn-xs btn-danger"  ng-click="deleteTask(task._id, $index)">
+          <button type="button"  class="btn btn-default btn-xs btn-danger"  ng-click="deleteTask((task._id || task.id), $index)">
             Remove <span class="glyphicon  glyphicon-remove" aria-hidden="true"></span>
           </button>
         </div>
